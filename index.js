@@ -1,8 +1,14 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const smsRouter = require('./smsRoutes/sms')
+const smsRouter = require('./smsRoutes/sms');
+const config = require('./config.js');
+//const createTopic = require('./kafka/createTopic.js');
 
-const app = express()
+//createTopic.createTopic();
+
+const port = config.port
+
+const app = express();
 
 mongoose.connect('mongodb://localhost/sms_database_dev', {
     useNewUrlParser: true,
@@ -16,6 +22,6 @@ con.on('open', () => {
 
 app.use('/sms',smsRouter)
 
-app.listen(3000, () => {
-    console.log(`app listening at http://localhost:3000`)
+app.listen(port, () => {
+    console.log(`app listening at http://localhost:${port}`)
 })

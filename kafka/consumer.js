@@ -1,14 +1,15 @@
 const kafka = require('kafka-node')
 const smsObject = require('../smsRoutes/models/smsSchema')
+const config = require('../config')
 
 console.log("inside consumer ")
 
 try {
     const Consumer = kafka.Consumer;
-    const client = new kafka.KafkaClient({ kafkaHost: 'localhost:9092' });
+    const client = new kafka.KafkaClient({ kafkaHost: config.KafkaHost });
     let consumer = new Consumer(
         client,
-        [{ topic: 'testTopic1', partition: 0 }],
+        [{ topic: config.topic, partition: 0 }],
         {
             autoCommit: true,
             fetchMaxWaitMs: 1000,
@@ -18,17 +19,17 @@ try {
         }
     );
     consumer.on('message', async function (message) {
-        console.log('kafka message: ',message.value);
+        console.log('kafka message: ', message.value);
         let obj = JSON.parse(message.value);
         const sms = new smsObject({
             mobileNo: obj.mobileNo,
             msg: obj.msg
         })
-        try{
+        try {
             await sms.save()
-            console.log("sms",sms)
-        }catch (err){
-            console.log("Error in saving object ",err)
+            console.log("sms", sms)
+        } catch (err) {
+            console.log("Error in saving object ", err)
         }
     })
     consumer.on('error', function (err) {

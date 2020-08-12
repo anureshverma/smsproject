@@ -1,15 +1,22 @@
 const kafka = require('kafka-node');
+const config = require('../config')
 
-const client = new kafka.KafkaClient({kafkaHost: 'localhost:9092'});
+const client = new kafka.KafkaClient({ kafkaHost: config.kafkaHost });
 
+/* const createTopicService = {
 
+  createTopic: async () => { */
 const topicToCreate = [{
-    topic: 'testTopic1',
-    partitions: 1,
-    replicationFactor: 1
-  }
-  ];
+  topic: config.topic,
+  partitions: 1,
+  replicationFactor: 1
+}
+];
 
 client.createTopics(topicToCreate, (error, result) => {
-    console.log(result, 'topic created successfully');
+  console.log(result, 'topic created successfully');
 });
+/*   }
+}
+
+module.exports = createTopicService */
