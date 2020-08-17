@@ -7,7 +7,7 @@ const client = new kafka.KafkaClient({ kafkaHost: config.kafkaHost });
 
   createTopic: async () => { */
 const topicToCreate = [{
-  topic: config.topic,
+  topic: config.kafkaTopic,
   partitions: 1,
   replicationFactor: 1
 }

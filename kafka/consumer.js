@@ -6,10 +6,10 @@ console.log("inside consumer ")
 
 try {
     const Consumer = kafka.Consumer;
-    const client = new kafka.KafkaClient({ kafkaHost: config.KafkaHost });
+    const client = new kafka.KafkaClient({ kafkaHost: config.kafkaHost });
     let consumer = new Consumer(
         client,
-        [{ topic: config.topic, partition: 0 }],
+        [{ topic: config.kafkaTopic, partition: 0 }],
         {
             autoCommit: true,
             fetchMaxWaitMs: 1000,

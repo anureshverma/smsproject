@@ -2,9 +2,9 @@ const kafka = require('kafka-node');
 const config = require('../config')
 
 const Producer = kafka.Producer;
-const client = new kafka.KafkaClient({ kafkaHost: config.KafkaHost });
+const client = new kafka.KafkaClient({ kafkaHost: config.kafkaHost });
 const producer = new Producer(client);
-const kafka_topic = config.topic;
+const kafka_topic = config.kafkaTopic;
 console.log(kafka_topic);
 producer.on("ready", function () {
     console.log("Kafka Producer is connected and ready.");

@@ -2,6 +2,7 @@ const express = require('express')
 var bodyParser = require('body-parser')
 const kafkaRead = require('../kafka/consumer.js');
 const kafkaSend = require('../kafka/producer.js');
+const config = require('../config.js');
 
 const router = express.Router()
 
@@ -10,8 +11,8 @@ var jsonParser = bodyParser.json()
 
 var userData = [];
 
-const accountSid = 'AC283aeb723c4e4929bd9bb6b4fa10b35a';
-const authToken = 'b676669a733461670a40d438b50b0476';
+const accountSid = config.twilioAccountSid;
+const authToken = config.twilioAuthToken;
 const client = require('twilio')(accountSid, authToken);
 
 router.post('/sendMsg', jsonParser, (req, res) => {
@@ -30,7 +31,7 @@ router.post('/sendMsg', jsonParser, (req, res) => {
         client.messages
             .create({
                 body: `${msg}`,
-                from: '+13344633171',
+                from: config.twilioNumber,
                 to: `${mobileNo}`
             })
             .then(message => {
@@ -42,7 +43,7 @@ router.post('/sendMsg', jsonParser, (req, res) => {
                 res.send(err)
             });
     } else {
-        res.send("Message not Found");
+        res.send("Error: Message not Found");
     }
 
 })

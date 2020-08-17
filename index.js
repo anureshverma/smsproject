@@ -10,7 +10,7 @@ const port = config.port
 
 const app = express();
 
-mongoose.connect('mongodb://localhost/sms_database_dev', {
+mongoose.connect(config.mongoDbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
