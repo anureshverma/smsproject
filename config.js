@@ -6,6 +6,8 @@ const config = {
     twilioAuthToken: 'b676669a733461670a40d438b50b0476',
     twilioNumber: '+13344633171',
     mongoDbUrl: 'mongodb://localhost/sms_database_dev', //sms_database_dev is db name
+    htmlFileToConvertInPdf: '/home/anuresh/Downloads/test.html',
+    PdfFileSavePath: '/tmp/'
 }
 
 module.exports = config

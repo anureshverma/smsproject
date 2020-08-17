@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const smsRouter = require('./smsRoutes/sms');
+const smsRouter = require('./smsRoutes/sms')
+const pdfRouter = require('./pdfRoutes/htmlToPdf')
 const config = require('./config.js');
 //const createTopic = require('./kafka/createTopic.js');
 
@@ -21,6 +22,7 @@ con.on('open', () => {
 })
 
 app.use('/sms',smsRouter)
+app.use('/pdf',pdfRouter)
 
 app.listen(port, () => {
     console.log(`app listening at http://localhost:${port}`)
