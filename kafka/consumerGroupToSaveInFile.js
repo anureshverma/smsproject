@@ -11,7 +11,6 @@ var consumer = new ConsumerGroup({ kafkaHost: config.kafkaHost, groupId: 'saveIn
 try {
     consumer.on('message', async function (message) {
         console.log('########################')
-        console.log('kafka message consumerToSaveInFile: ', message.value)
         if(message.key === 'sms'){
             fs.writeFile(config.fileToWriteConsumerDataOfSms, `${message.value}\n`, { 'flag': 'a' }, err => {
                 if (err) {
@@ -25,7 +24,7 @@ try {
                 if (err) {
                     return console.error(err)
                 }
-                console.log("Messaged save successfully")
+                console.log("pdf Message save successfully")
             })
         }
         

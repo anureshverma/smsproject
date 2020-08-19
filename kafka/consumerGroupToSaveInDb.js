@@ -11,8 +11,6 @@ var consumer = new ConsumerGroup({ kafkaHost: config.kafkaHost, groupId: 'saveIn
 try {
     consumer.on('message', async function (message) {
         console.log("***********************")
-        console.log('message', message)
-        console.log('kafka message: ', message.value);
         if (message.key === 'sms') {
             let obj = JSON.parse(message.value)
             const sms = new smsObject({
