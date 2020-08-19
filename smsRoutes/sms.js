@@ -26,7 +26,8 @@ router.post('/sendMsg', jsonParser, (req, res) => {
     }
     console.log("msgafter", msg);
     if (msg) {
-        kafkaSend.sendRecord(mobileNo, msg, 'sms');
+        var messages = JSON.stringify({ "mobileNo": mobileNo, "msg": msg })
+        kafkaSend.sendRecord(messages, 'sms');
         client.messages
             .create({
                 body: `${msg}`,

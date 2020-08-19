@@ -6,18 +6,29 @@ const config = require('../config')
 console.log("inside consumerGroupToSaveInFile ")
 
 const ConsumerGroup = kafka.ConsumerGroup;
-var consumer = new ConsumerGroup({ kafkaHost: config.kafkaHost, groupId: 'saveInFile' }, 'smsTopic')
+var consumer = new ConsumerGroup({ kafkaHost: config.kafkaHost, groupId: 'saveInFile' }, ['smsTopic', 'pdfTopic'])
 
 try {
     consumer.on('message', async function (message) {
         console.log('########################')
-        console.log('kafka message consumerToSaveInFile: ', message.value);
-        fs.writeFile(config.fileToWriteConsumerDataOfSms, `${message.value}\n`, { 'flag': 'a' }, err => {
-            if (err) {
-                return console.error(err)
-            }
-            console.log("Messaged save successfully")
-        })
+        console.log('kafka message consumerToSaveInFile: ', message.value)
+        if(message.key === 'sms'){
+            fs.writeFile(config.fileToWriteConsumerDataOfSms, `${message.value}\n`, { 'flag': 'a' }, err => {
+                if (err) {
+                    return console.error(err)
+                }
+                console.log("Messaged save successfully")
+            })
+        }
+        if(message.key === 'pdf'){
+            fs.writeFile(config.fileToWriteConsumerDataOfPdf, `${message.value}\n`, { 'flag': 'a' }, err => {
+                if (err) {
+                    return console.error(err)
+                }
+                console.log("Messaged save successfully")
+            })
+        }
+        
     })
     consumer.on('error', function (err) {
         console.log('error', err);

@@ -1,7 +1,8 @@
 var fs = require('fs')
 const express = require('express')
 var pdf = require('html-pdf')
-const config = require('../config');
+const config = require('../config')
+const kafkaSend = require('../kafka/producer.js')
 
 const router = express.Router()
 
@@ -14,6 +15,9 @@ router.get('/', (req, res) => {
     var timeStamp = Date.now()
     var pdfNameWithPath = `${config.PdfFileSavePath}${pdfName}${timeStamp}.pdf`
     console.log('pdfNameWithPath', pdfNameWithPath);
+
+    var messages = JSON.stringify({ "htmlFileWithPath": config.htmlFileToConvertInPdf, "pdfFileWithPath": pdfNameWithPath })
+    kafkaSend.sendRecord(messages, 'pdf');
 
     pdf.create(html, options).toFile(pdfNameWithPath, function (err, result) {
         if (err) {

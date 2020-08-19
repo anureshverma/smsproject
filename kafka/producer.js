@@ -18,7 +18,7 @@ producer.on("error", function (error) {
 
 const KafkaService = {
 
-    sendRecord: (mobileNo, msg, key) => {
+    sendRecord: (messages, key) => {
         var payloads = []
         if (key === 'sms') {
             payloads = [
@@ -27,9 +27,22 @@ const KafkaService = {
                     key: 'sms',
                     partition: 0,
                     timestamp: Date.now(),
-                    messages: JSON.stringify({ "mobileNo": mobileNo, "msg": msg })
+                    messages: messages
                 },
-                
+
+            ];
+        }
+
+        if (key === 'pdf') {
+            payloads = [
+                {
+                    topic: 'pdfTopic',
+                    key: 'pdf',
+                    partition: 0,
+                    timestamp: Date.now(),
+                    messages: messages
+                },
+
             ];
         }
 
