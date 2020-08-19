@@ -3,6 +3,9 @@ const mongoose = require('mongoose')
 const smsRouter = require('./smsRoutes/sms')
 const pdfRouter = require('./pdfRoutes/htmlToPdf')
 const config = require('./config.js');
+//const kafkaRead = require('./kafka/consumer.js');
+const kafkaReadForFile = require('./kafka/consumerGroupToSaveInFile');
+const kafkaReadToSaveInDb = require('./kafka/consumerGroupToSaveInDb')
 //const createTopic = require('./kafka/createTopic.js');
 
 //createTopic.createTopic();

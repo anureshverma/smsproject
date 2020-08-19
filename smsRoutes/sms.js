@@ -1,6 +1,5 @@
 const express = require('express')
 var bodyParser = require('body-parser')
-const kafkaRead = require('../kafka/consumer.js');
 const kafkaSend = require('../kafka/producer.js');
 const config = require('../config.js');
 
@@ -27,7 +26,7 @@ router.post('/sendMsg', jsonParser, (req, res) => {
     }
     console.log("msgafter", msg);
     if (msg) {
-        kafkaSend.sendRecord(mobileNo ,msg)
+        kafkaSend.sendRecord(mobileNo, msg, 'sms');
         client.messages
             .create({
                 body: `${msg}`,
